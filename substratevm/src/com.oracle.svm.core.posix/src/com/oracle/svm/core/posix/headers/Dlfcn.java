@@ -79,29 +79,29 @@ public class Dlfcn {
     @CFunction
     public static native CCharPointer dlerror();
 
-    @CStruct
-    public interface Dl_info extends PointerBase {
-        @CField
-        CCharPointer dli_fname();
-
-        @CField
-        Pointer dli_fbase();
-
-        @CField
-        CCharPointer dli_sname();
-
-        @CField
-        Pointer dli_saddr();
-    }
-
-    @CFunction
-    public static native int dladdr(WordBase address, Dl_info info);
-
     @Platforms(Platform.LINUX.class)
     @CContext(PosixDirectives.class)
     @CLibrary("dl")
     @LibCSpecific(GLibC.class)
     public static class GNUExtensions {
+
+	@CStruct
+	public interface Dl_info extends PointerBase {
+	    @CField
+	    CCharPointer dli_fname();
+	    
+	    @CField
+	    Pointer dli_fbase();
+	    
+	    @CField
+	    CCharPointer dli_sname();
+	    
+	    @CField
+	    Pointer dli_saddr();
+	}
+
+	@CFunction
+	public static native int dladdr(WordBase address, Dl_info info);
 
         public interface Lmid_t extends SignedWord {
         }

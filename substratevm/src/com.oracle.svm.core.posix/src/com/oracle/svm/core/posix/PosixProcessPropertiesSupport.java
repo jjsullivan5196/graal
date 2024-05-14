@@ -47,6 +47,9 @@ import com.oracle.svm.core.posix.headers.Signal;
 import com.oracle.svm.core.posix.headers.Stdlib;
 import com.oracle.svm.core.posix.headers.Unistd;
 
+import com.oracle.svm.core.c.libc.GLibC;
+import com.oracle.svm.core.c.libc.LibCSpecific;
+
 public abstract class PosixProcessPropertiesSupport extends BaseProcessPropertiesSupport {
 
     @Override
@@ -91,9 +94,10 @@ public abstract class PosixProcessPropertiesSupport extends BaseProcessPropertie
     }
 
     @Override
+    @LibCSpecific(value = GLibC.class)
     public String getObjectFile(PointerBase symbolAddress) {
-        Dlfcn.Dl_info info = UnsafeStackValue.get(Dlfcn.Dl_info.class);
-        if (Dlfcn.dladdr(symbolAddress, info) == 0) {
+        Dlfcn.GNUExtensions.Dl_info info = UnsafeStackValue.get(Dlfcn.GNUExtensions.Dl_info.class);
+        if (Dlfcn.GNUExtensions.dladdr(symbolAddress, info) == 0) {
             return null;
         }
         CCharPointer realpath = Stdlib.realpath(info.dli_fname(), WordFactory.nullPointer());
