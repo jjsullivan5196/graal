@@ -55,6 +55,7 @@ public class PosixDirectives implements CContext.Directives {
                     "<sys/utsname.h>",
                     "<time.h>",
                     "<unistd.h>",
+		    "<ucontext.h>",
     };
 
     private static final String[] darwinLibs = new String[]{
