@@ -54,7 +54,7 @@ public class LinuxTime extends Time {
         timer_t read();
     }
 
-    @CStruct(addStructKeyword = true)
+    @CStruct(value = "itimerval", addStructKeyword = true)
     public interface itimerspec extends PointerBase {
         @CFieldAddress
         Time.timespec it_interval();

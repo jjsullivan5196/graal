@@ -40,6 +40,8 @@ import org.graalvm.nativeimage.c.struct.CFieldAddress;
 import org.graalvm.nativeimage.c.struct.CFieldOffset;
 import org.graalvm.nativeimage.c.struct.CPointerTo;
 import org.graalvm.nativeimage.c.struct.CStruct;
+import org.graalvm.nativeimage.c.struct.AllowWideningCast;
+import org.graalvm.nativeimage.c.struct.AllowNarrowingCast;
 import org.graalvm.nativeimage.c.type.VoidPointer;
 import org.graalvm.nativeimage.c.type.WordPointer;
 import org.graalvm.word.PointerBase;
@@ -47,6 +49,9 @@ import org.graalvm.word.PointerBase;
 import com.oracle.svm.core.RegisterDumper;
 import com.oracle.svm.core.SubstrateSegfaultHandler;
 import com.oracle.svm.core.posix.PosixUtils;
+
+import com.oracle.svm.core.c.libc.GLibC;
+import com.oracle.svm.core.c.libc.LibCSpecific;
 
 // Checkstyle: stop
 
@@ -182,6 +187,8 @@ public class Signal {
         sigset_tPointer sa_mask();
     }
 
+    @Platforms(Platform.LINUX.class)
+    @LibCSpecific(GLibC.class)
     @CStruct(addStructKeyword = true)
     public interface sigevent extends PointerBase {
         @CField
